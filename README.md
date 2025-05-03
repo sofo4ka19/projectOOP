@@ -19,6 +19,7 @@ Built to make teamwork easy, it allows you to:
 - **Backend:** NestJS
 - **UI Framework:** Ant Design
 - **Authentication:** Custom provider
+- Codegen, Graphql
 
 ## 🧩 Core Features
 - Kanban board with real-time updates
