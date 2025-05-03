@@ -15,10 +15,10 @@ Built to make teamwork easy, it allows you to:
 
 ## ✨ Tech Stack
 - **Framework:** [Refine](https://github.com/refinedev/refine) (with ready-to-use hooks and components)
-- **Frontend:** JavaScript, React, Vite
+- **Frontend:** TypeScript, React, Vite
 - **Backend:** NestJS
 - **UI Framework:** Ant Design
-- **Authentication:** Custom mock OAuth provider
+- **Authentication:** Custom provider
 
 ## 🧩 Core Features
 - Kanban board with real-time updates
@@ -27,26 +27,16 @@ Built to make teamwork easy, it allows you to:
 - Micro-chat / comment section per task
 - Simulated reminders
 
-## 🚀 Getting Started
+## 🤝 References
+This project was based on an example from the official Refine library on GitHub:
+https://github.com/refinedev/refine/tree/master/examples/app-crm-minimal
 
-### 1. Clone the Repository
+## 🚀 Getting Started
 ```bash
 git clone https://github.com/sofo4ka19/projectOOP.git
 cd projectOOP
-```
-
-### 2. Install Frontend
-```bash
-cd frontend
 npm install
 npm run dev
-```
-
-### 3. Install Backend
-```bash
-cd ../backend
-npm install
-npm run start:dev
 ```
 
 > ⚙️ This project uses [Refine](https://github.com/refinedev/refine) with Vite for the frontend and NestJS for the backend. Make sure Node.js and npm are installed.
