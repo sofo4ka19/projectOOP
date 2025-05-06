@@ -16,6 +16,7 @@ import routerBindings, {
 import { App as AntdApp } from "antd";
 import { BrowserRouter, Outlet, Route, Routes } from "react-router";
 import Layout from "./components/layout";
+import List from "./pages/tasks/list";
 
 
 function App() {
@@ -56,6 +57,7 @@ function App() {
                     }
                   >
                     <Route index element={<Home />} />
+                    <Route index element={<List />}></Route>
                   </Route>
                 </Routes>
                 <RefineKbar />
