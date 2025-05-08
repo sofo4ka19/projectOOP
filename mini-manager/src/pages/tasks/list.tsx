@@ -111,7 +111,9 @@ const List = () => {
                             />
                         </KanbanItem>
                     ))}
-
+                    {!column.tasks.length && (
+                        <KanbanAddCardButton onClick={() => handleAddCard({ stageId: column.id })} />
+                    )}
                 </KanbanColumn>))}
             </KanbanBoard>
         </KanbanBoardContainer>
