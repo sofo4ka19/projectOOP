@@ -25,7 +25,6 @@ import EditTask from "./pages/tasks/edit";
 function App() {
   return (
     <BrowserRouter>
-      <GitHubBanner />
       <RefineKbarProvider>
         <AntdApp>
           <DevtoolsProvider>
@@ -73,7 +72,7 @@ function App() {
               <UnsavedChangesNotifier />
               <DocumentTitleHandler />
             </Refine>
-            <DevtoolsPanel />
+            {/* <DevtoolsPanel /> */}
           </DevtoolsProvider>
         </AntdApp>
       </RefineKbarProvider>
