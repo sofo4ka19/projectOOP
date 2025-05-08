@@ -2,7 +2,7 @@ import React from "react";
 import { KanbanBoard, KanbanBoardContainer } from "@/components/tasks/kanban/board";
 import KanbanColumn from "@/components/tasks/kanban/column";
 import KanbanItem from "@/components/tasks/kanban/item";
-import { useList, useUpdate } from "@refinedev/core";
+import { useList, useNavigation, useUpdate } from "@refinedev/core";
 import { TASK_STAGES_QUERY, TASKS_QUERY } from "@/graphql/queries";
 import { TaskStage } from "@/graphql/schema.types";
 import { GetFieldsFromList } from "@refinedev/nestjs-query";
@@ -15,6 +15,9 @@ import { DragEndEvent } from "@dnd-kit/core";
 import { UPDATE_TASK_STAGE_MUTATION } from "@/graphql/mutations";
 
 const List = ({ children }: React.PropsWithChildren) => {
+
+    const { replace } = useNavigation();
+
     const { data: stages, isLoading: isLoadingStages } = useList<TaskStage>({
         resource: 'taskStages',
         filters: [
@@ -75,7 +78,8 @@ const List = ({ children }: React.PropsWithChildren) => {
     }, [stages, tasks])
 
     const handleAddCard = (args: { stageId: string }) => {
-
+        const path = args.stageId === "unassigned" ? '/tasks/new' : `tasks/new?stageId=${args.stageId}`
+        replace(path);
     }
 
     const handleOnDragEnd = (event: DragEndEvent) => {

@@ -14,10 +14,12 @@ import routerBindings, {
   UnsavedChangesNotifier,
 } from "@refinedev/react-router";
 import { App as AntdApp } from "antd";
-import { BrowserRouter, Outlet, Route, Routes } from "react-router";
+import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
 import Layout from "./components/layout";
 import { resources } from "./components/configs/resources";
 import List from "./pages/tasks/list";
+import CreateTask from "./pages/tasks/create";
+import EditTask from "./pages/tasks/edit";
 
 
 function App() {
@@ -58,8 +60,12 @@ function App() {
                     </Authenticated>
                   }>
                   <Route index element={<Home />} />
-                  <Route path="/tasks">
-                    <Route index element={<List />} />
+                  <Route path="/tasks" element={<List>
+                    <Outlet />
+                  </List>}>
+
+                    <Route path="new" element={<CreateTask />} />
+                    <Route path="edit/:id" element={<EditTask />} />
                   </Route>
                 </Route>
               </Routes>
@@ -71,7 +77,7 @@ function App() {
           </DevtoolsProvider>
         </AntdApp>
       </RefineKbarProvider>
-    </BrowserRouter>
+    </BrowserRouter >
   );
 }
 
