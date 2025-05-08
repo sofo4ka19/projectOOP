@@ -10,7 +10,7 @@ type Props = {
     description?: React.ReactNode,
     count: number,
     data?: UseDroppableArguments['data'],
-    onAddClick?: (args: {id:string}) => void,
+    onAddClick?: (args: { id: string }) => void,
 }
 
 const KanbanColumn = ({
@@ -22,11 +22,11 @@ const KanbanColumn = ({
     data,
     onAddClick
 }: React.PropsWithChildren<Props>) => {
-    const {isOver, setNodeRef, active} = useDroppable({id, data})
+    const { isOver, setNodeRef, active } = useDroppable({ id, data })
 
 
     const onAddClickHandler = () => {
-        onAddClick?.({id})
+        onAddClick?.({ id })
     }
 
     return (
@@ -38,11 +38,11 @@ const KanbanColumn = ({
                 padding: '0 16px'
             }}
         >
-            <div style={{padding: '12px'}}>
-                <Space style={{width: '100%', justifyContent: 'space-between'}}>
+            <div style={{ padding: '12px' }}>
+                <Space style={{ width: '100%', justifyContent: 'space-between' }}>
                     <Space>
-                        <Text 
-                            ellipsis={{tooltip: title}}
+                        <Text
+                            ellipsis={{ tooltip: title }}
                             size="xs"
                             strong
                             style={{
@@ -52,11 +52,11 @@ const KanbanColumn = ({
                         >
                             {title}
                         </Text>
-                        {!!count && <Badge count={count} color="cyan"/>}
+                        {!!count && <Badge count={count} color="cyan" />}
                     </Space>
-                    <Button 
+                    <Button
                         shape="circle"
-                        icon={<PlusOutlined/>}
+                        icon={<PlusOutlined />}
                         onClick={onAddClickHandler}
                     />
                 </Space>
@@ -65,7 +65,7 @@ const KanbanColumn = ({
             <div
                 style={{
                     flex: 1,
-                    overflowY: active ? 'unset' : 'scroll',
+                    overflowY: active ? 'unset' : 'auto',
                     border: '2px dashed transparent',
                     borderColor: isOver ? "#000040" : 'transparent',
                     borderRadius: '4px'
