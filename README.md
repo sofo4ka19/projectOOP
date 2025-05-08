@@ -35,8 +35,9 @@ https://github.com/refinedev/refine/tree/master/examples/app-crm-minimal
 ## 🚀 Getting Started
 ```bash
 git clone https://github.com/sofo4ka19/projectOOP.git
-cd projectOOP
+cd mini-manager
 npm install
+npm install react-router-dom
 npm run dev
 ```
 
