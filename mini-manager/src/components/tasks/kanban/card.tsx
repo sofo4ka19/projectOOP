@@ -4,6 +4,7 @@ import { TextIcon } from "@/components/text-icon";
 import { User } from "@/graphql/schema.types";
 import { getDateColor } from "@/utilities";
 import { ClockCircleOutlined, DeleteOutlined, EyeOutlined, MoreOutlined } from "@ant-design/icons";
+import { useDelete, useNavigation } from "@refinedev/core";
 import { Button, Card, ConfigProvider, Dropdown, MenuProps, Space, Tag, theme, Tooltip } from "antd";
 import dayjs from "dayjs";
 import { memo, useMemo } from "react";
@@ -20,64 +21,75 @@ type ProjectCardProps = {
     }[]
 }
 
-const ProjectCard = ({id, title, dueDate, users}: ProjectCardProps) => {
-    const {token} = theme.useToken();
-    const edit = () => {}
+const ProjectCard = ({ id, title, dueDate, users }: ProjectCardProps) => {
+    const { token } = theme.useToken();
+
+    const { edit } = useNavigation();
+    const { mutate } = useDelete();
+
     const dropdownItems = useMemo(() => {
         const dropdownItems: MenuProps['items'] = [
             {
                 label: 'View card',
                 key: '1',
-                icon: <EyeOutlined/>,
+                icon: <EyeOutlined />,
                 onClick: () => {
-                    edit()
+                    edit('tasks', id, 'replace')
                 }
             },
             {
                 danger: true,
                 label: 'Delete card',
                 key: '2',
-                icon: <DeleteOutlined/>,
-                onClick: () => {}
+                icon: <DeleteOutlined />,
+                onClick: () => {
+                    mutate({
+                        resource: 'tasks',
+                        id,
+                        meta: {
+                            operation: 'task'
+                        }
+                    })
+                }
             }
         ]
         return dropdownItems
     }, [])
 
     const dueDateOptions = useMemo(() => {
-        if(!dueDate) return null;
+        if (!dueDate) return null;
 
         const date = dayjs(dueDate);
         return {
-            color: getDateColor({date:dueDate}) as string,
+            color: getDateColor({ date: dueDate }) as string,
             text: date.format('MMM DD')
         }
     }, [dueDate]);
-    return(
+    return (
         <ConfigProvider
-        theme = {{
-            components: {
-                Tag: {
-                    colorText: token.colorTextSecondary,
-                },
-                Card: {
-                    headerBg: 'transparent'
+            theme={{
+                components: {
+                    Tag: {
+                        colorText: token.colorTextSecondary,
+                    },
+                    Card: {
+                        headerBg: 'transparent'
+                    }
                 }
-            }
-        }}
+            }}
         >
             <Card
                 size="small"
-                title={<Text ellipsis={{tooltip: title}}>{title}</Text>}  
-                onClick={() => edit()}    
-                extra = {
+                title={<Text ellipsis={{ tooltip: title }}>{title}</Text>}
+                onClick={() => edit()}
+                extra={
                     <Dropdown
                         trigger={['click']}
                         menu={{
                             items: dropdownItems
                         }}
                         placement="bottom"
-                        arrow={{pointAtCenter: true}}
+                        arrow={{ pointAtCenter: true }}
                     >
                         <Button
                             type="text"
@@ -97,21 +109,21 @@ const ProjectCard = ({id, title, dueDate, users}: ProjectCardProps) => {
                             }}
                         />
                     </Dropdown>
-                }      
+                }
             >
                 <div
-                style={{
-                    display: 'flex',
-                    flexWrap: 'wrap',
-                    alignItems: 'center',
-                    gap: '8px'
-                }}
+                    style={{
+                        display: 'flex',
+                        flexWrap: 'wrap',
+                        alignItems: 'center',
+                        gap: '8px'
+                    }}
                 >
-                    <TextIcon style={{marginRight: '4px'}}/>
+                    <TextIcon style={{ marginRight: '4px' }} />
                     {dueDateOptions && (
                         <Tag
                             icon={
-                                <ClockCircleOutlined style={{fontSize: '12px'}}/>
+                                <ClockCircleOutlined style={{ fontSize: '12px' }} />
                             }
                             style={{
                                 padding: '0 4px',
