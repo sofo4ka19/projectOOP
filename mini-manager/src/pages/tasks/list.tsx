@@ -8,15 +8,16 @@ import { TaskStage } from "@/graphql/schema.types";
 import { GetFieldsFromList } from "@refinedev/nestjs-query";
 import { TasksQuery } from "@/graphql/types";
 import ProjectCardMemo from "@/components/tasks/kanban/card";
+import { KanbanAddCardButton } from "@/components/tasks/kanban/add-card-button";
 
 const List = () => {
-    const {data: stages, isLoading: isLoadingStages} = useList<TaskStage>({
+    const { data: stages, isLoading: isLoadingStages } = useList<TaskStage>({
         resource: 'taskStages',
         filters: [
             {
                 field: 'title',
                 operator: 'in',
-                value: ['TODO','IN PROGRESS', 'IN REVIEW', 'DONE' ]
+                value: ['TODO', 'IN PROGRESS', 'IN REVIEW', 'DONE']
             }
         ],
         sorters: [
@@ -29,7 +30,7 @@ const List = () => {
             qqlQuery: TASK_STAGES_QUERY
         }
     })
-    const {data: tasks, isLoading: isLoadingTasks} = useList<GetFieldsFromList<TasksQuery>>({
+    const { data: tasks, isLoading: isLoadingTasks } = useList<GetFieldsFromList<TasksQuery>>({
         resource: 'tasks',
         sorters: [
             {
@@ -49,17 +50,17 @@ const List = () => {
     })
 
     const taskStages = React.useMemo(() => {
-        if(!tasks?.data || !stages?.data){
+        if (!tasks?.data || !stages?.data) {
             return {
                 unassignedStage: [],
                 stages: []
             }
         }
-        const unassignedStage = tasks.data.filter((task) => task.stageId===null)
+        const unassignedStage = tasks.data.filter((task) => task.stageId === null)
 
         const grouped: TaskStage[] = stages.data.map((stage) => ({
             ...stage,
-            tasks: tasks.data.filter((task) => task.stageId?.toString()===stage.id)
+            tasks: tasks.data.filter((task) => task.stageId?.toString() === stage.id)
         }))
         return {
             unassignedStage,
@@ -67,7 +68,7 @@ const List = () => {
         }
     }, [stages, tasks])
 
-    const handleAddCard = (args: {stageId: string}) => {
+    const handleAddCard = (args: { stageId: string }) => {
 
     }
 
@@ -79,17 +80,19 @@ const List = () => {
                         id='unassigned'
                         title={"unassigned"}
                         count={taskStages.unassignedStage.length || 0}
-                        onAddClick = {() => handleAddCard({stageId: 'unassigned'})}
+                        onAddClick={() => handleAddCard({ stageId: 'unassigned' })}
                     >
                         {taskStages.unassignedStage.map((task) => (
-                            <KanbanItem key={task.id} id={task.id} data={{...task, stageId: 'unassigned'}}>
-                                <ProjectCardMemo 
+                            <KanbanItem key={task.id} id={task.id} data={{ ...task, stageId: 'unassigned' }}>
+                                <ProjectCardMemo
                                     {...task}
                                     dueDate={task.dueDate || undefined}
                                 />
                             </KanbanItem>
                         ))}
+                        {!taskStages.unassignedStage.length && (<KanbanAddCardButton onClick={() => handleAddCard({ stageId: 'unassigned' })} />)}
                     </KanbanColumn>
+
                 </KanbanBoard>
             </KanbanBoardContainer>
         </>
