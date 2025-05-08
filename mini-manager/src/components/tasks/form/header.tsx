@@ -9,7 +9,7 @@ import { getDateColor } from "@/utilities";
 
 
 import { Task } from "@/graphql/schema.types";
-import { Text } from "@/components/text";
+import { Text, UserTag } from "@/components";
 
 type DescriptionProps = {
   description?: Task["description"];

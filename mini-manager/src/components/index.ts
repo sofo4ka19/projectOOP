@@ -13,6 +13,8 @@ export {
     LatestActivitiesSkeleton,
 };
 
+export * from "./tags/user-tags"
+export * from "./text"
 export * from "./accordion";
 export * from "./tasks/form/description";
 export * from "./tasks/form/due-date";
